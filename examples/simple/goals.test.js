@@ -1,10 +1,18 @@
+var path = require('path');
+
+beforeEach(function () {
+    console.log('beforeEach');
+    imandra.modUse(path.join(__dirname, "./model.re"));
+
+});
+
+afterEach(function () {
+    // return imandra.undoAll();
+});
+
 test('example', function () {
-    callImandra('yo');
-
-    // let eval = Pconfig.(with_mode_assigned ~to_:(State.Logic) Reflect.eval)
-    verify('fun x -> x + 3');
+    return imandra.verify('fun model -> model <> 23').then(function (res) {
+        return expect(res.result).toStrictEqual('proved');
+    });
 });
 
-test('example2', function () {
-    callImandra();
-});
